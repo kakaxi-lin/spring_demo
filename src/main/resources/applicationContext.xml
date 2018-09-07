@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+
+
+	<!-- 扫描注释包 -->
+	<!-- 此处的默认过滤器，会扫描包含@Service,@Component,@Repository,@Controller注解修饰的类，而不是注解的全部类 -->
+	<context:component-scan base-package="com.*">
+		<!-- <context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" /> -->
+	</context:component-scan>
+	
+	<!-- 不处理静态资源 -->
+	<mvc:default-servlet-handler />
+
+	<!--注解映射的支持 防止@ResponseBody返回中文乱码 -->
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean
+				class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<!-- 这里顺序不能写反，一定要先写text/html，否则IE下会出现下载提示 -->
+						<value>text/html;charset=UTF-8</value>
+						<value>application/json</value>
+					</list>
+				</property>
+				<property name="features">
+					<list>
+						<value>WriteMapNullValue</value>
+						<value>QuoteFieldNames</value>
+					</list>
+					<!-- * QuoteFieldNames———-输出key时是否使用双引号,默认为true * WriteMapNullValue——–是否输出值为null的字段,默认为false 
+						* WriteNullNumberAsZero—-数值字段如果为null,输出为0,而非null * WriteNullListAsEmpty—–List字段如果为null,输出为[],而非null 
+						* WriteNullStringAsEmpty—字符类型字段如果为null,输出为"",而非null * WriteNullBooleanAsFalse–Boolean字段如果为null,输出为false,而非null 
+						*/ -->
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	<!--对模型视图名称的解析，即在模型视图名称添加前后缀 -->
+	<!-- 视图解释类 -->
+	<bean id="jspViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- 处理文件上传 -->
+	<!-- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> 
+		默认编码 (utf-8) <property name="defaultEncoding" value="utf-8" /> 最大内存大小 (默认10240) 
+		单位byte 1M <property name="maxInMemorySize" value="1024000" /> 临时上传目录。上传内存为10M 
+		， 上传一个100M的文件时，内存满10M时，则放到upload文件中，释放内存，当全部上传完毕时，则文件放到controller里定义的上传目录 
+		<property name="uploadTempDir" value="/temp/" /> 最大文件大小，-1为无限止(默认-1)单位byte 
+		10M <property name="maxUploadSize" value="102400000" /> </bean> -->
+</beans>
