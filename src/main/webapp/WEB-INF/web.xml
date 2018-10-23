@@ -8,7 +8,7 @@
 	那么spring的ContextLoderListener监听器就会在/WEB-INF/下去寻找并加载该目录下的名为applicationContext.xml这个文件 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:applicationContext.xml</param-value>
+		<param-value>classpath:spring.xml</param-value>
 	</context-param>
 	
 	<listener>
@@ -20,7 +20,7 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:applicationContext.xml</param-value>
+			<param-value>classpath:spring-mvc.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>

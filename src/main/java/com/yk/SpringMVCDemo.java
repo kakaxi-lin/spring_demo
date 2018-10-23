@@ -14,7 +14,7 @@ public class SpringMVCDemo {
 public User firstMethod(Integer userId){
 	System.out.println("obj.."+userId);
 	User u=new User();
-	u.setId(5);
+	u.setId(52);
 	u.setName("哈哈哈x");
 	return u;
 }

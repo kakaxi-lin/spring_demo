@@ -11,9 +11,9 @@
 
 	<!-- 扫描注释包 -->
 	<!-- 此处的默认过滤器，会扫描包含@Service,@Component,@Repository,@Controller注解修饰的类，而不是注解的全部类 -->
-	<context:component-scan base-package="com.*">
-		<!-- <context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" /> -->
+	<!-- 不希望它扫描其余注解标注的类，所以设置了 use-default-filters 为 false，并使用 context:include-filter 子标签设置其只扫描带有 @Controller 注解标注的类。 -->
+	<context:component-scan base-package="com.yk" use-default-filters="true">
+		<!--   <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />-->
 	</context:component-scan>
 	
 	<!-- 不处理静态资源 -->
